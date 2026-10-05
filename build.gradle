@@ -1,0 +1,54 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+version = '0.1.0'
+group = 'dev.cbctanktower'
+base { archivesName = 'cbc-tank-tower' }
+java { toolchain.languageVersion = JavaLanguageVersion.of(21) }
+repositories { mavenCentral() }
+sourceSets {
+    releaseCheck
+    smoke {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
+neoForge {
+    version = '21.1.252'
+    addModdingDependenciesTo sourceSets.releaseCheck
+    runs {
+        server {
+            server(); programArgument '--nogui'; gameDirectory = file('run/server')
+            sourceSet = sourceSets.releaseCheck; loadedMods = []
+            if (providers.gradleProperty('towerSmoke').isPresent()) systemProperty 'cbctanktower.smoke', 'true'
+        }
+        client {
+            client(); gameDirectory = file('run/client')
+            sourceSet = sourceSets.releaseCheck; loadedMods = []
+            if (providers.gradleProperty('towerSmoke').isPresent()) systemProperty 'cbctanktower.client_smoke', 'true'
+        }
+    }
+}
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+    releaseCheckRuntimeClasspath.extendsFrom runtimeClasspath
+}
+tasks.register('smokeJar', Jar) {
+    from sourceSets.smoke.output
+    from 'src/smoke-resources'
+    archiveBaseName = 'cbc-tank-tower-checks'
+    destinationDirectory = layout.buildDirectory.dir('smoke')
+}
+dependencies {
+    // Third-party JARs are local compile dependencies and never bundled into this addon.
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
+    localRuntime files(tasks.named('jar', Jar).flatMap { it.archiveFile })
+    if (providers.gradleProperty('towerSmoke').isPresent()) localRuntime files(tasks.named('smokeJar', Jar).flatMap { it.archiveFile })
+    if (providers.gradleProperty('towerFullPack').isPresent()) {
+        localRuntime fileTree(dir: 'runtime-mods', include: ['*.jar'], exclude: ['cbc-tank-tower-*.jar'])
+    } else {
+        localRuntime fileTree(dir: 'libs', include: ['create-6.0.10.jar', 'createbigcannons-5.11.7+mc.1.21.1.jar', 'ritchiesprojectilelib-*.jar'])
+    }
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }

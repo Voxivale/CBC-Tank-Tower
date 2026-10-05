@@ -1,0 +1,7 @@
+{
+  "itemGroup.cbctanktower": "CBC Tank Tower",
+  "block.cbctanktower.tank_cannon_mount": "Башенное крепление пушки",
+  "exception.cbctanktower.unloaded": "Корпус башни выходит в непрогруженную область: %s",
+  "exception.cbctanktower.immovable": "В корпусе башни есть неподвижный блок: %s",
+  "exception.cbctanktower.too_many": "Корпус башни превышает ограничение Create: %s блоков"
+}

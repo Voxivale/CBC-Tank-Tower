@@ -1,0 +1,12 @@
+.gradle/
+build/
+run/
+libs/*.jar
+runtime-mods/
+.idea/
+*.iml
+.vscode/
+*.log
+*.zip
+.env
+.env.*

@@ -1,0 +1,7 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+[[mods]]
+modId="cbctanktower_checks"
+version="1.0.0"
+displayName="CBC Tank Tower development checks"

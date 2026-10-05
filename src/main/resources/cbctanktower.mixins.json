@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.cbctanktower.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["CannonMountMixin", "MountPropertiesMixin", "MountExtensionMixin", "ArmMountMixin", "MovingMountMixin", "AeronauticsMountMixin", "SableMountMixin"],
+  "injectors": {"defaultRequire": 1}
+}

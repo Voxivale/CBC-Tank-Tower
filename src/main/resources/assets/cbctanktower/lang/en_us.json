@@ -1,0 +1,7 @@
+{
+  "itemGroup.cbctanktower": "CBC Tank Tower",
+  "block.cbctanktower.tank_cannon_mount": "Tank Cannon Mount",
+  "exception.cbctanktower.unloaded": "Turret body reaches an unloaded area at %s",
+  "exception.cbctanktower.immovable": "Turret body contains an immovable block at %s",
+  "exception.cbctanktower.too_many": "Turret body exceeds Create's limit of %s moved blocks"
+}
